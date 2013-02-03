@@ -1,8 +1,6 @@
 gumroad-php
 ===========
 
-Gumroad PHP library aka Gump
-
 PHP wrapper for [Gumroad API](http://gumroad.com/api/). Originally developed for
  [Ultiworld](http://ultiworld.com].
 
@@ -20,9 +18,11 @@ Dependencies:
     # Authenticate with email and password
     $gr->auth('YOUR_EMAIL', 'YOUR_PASSWORD');
 
+Good practice to also deauth once you are done, but if you did not, the client destructor method will deauth for you.
+
 ### API Endpoints
 
-#### Sessions
+#### [Sessions](https://gumroad.com/api/authentication)
 
 ##### Authenticate a session
 
@@ -37,6 +37,8 @@ Dependencies:
 
     #Shortcut
     $gr->deauth;
+
+#### [Links](https://gumroad.com/api/methods)
 
 ##### Get all links
 
@@ -67,5 +69,6 @@ Dependencies:
     $gr->links->deleteLink($id);
 
 ## License
-MIT License. See LICENSE
+MIT License (see LICENSE).
+
 Copyright (c) 2013 Orion Burt
