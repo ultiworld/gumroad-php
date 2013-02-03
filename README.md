@@ -1,8 +1,7 @@
 gumroad-php
 ===========
 
-PHP wrapper for [Gumroad API](http://gumroad.com/api/). Originally developed for
- [Ultiworld](http://ultiworld.com].
+PHP wrapper for the [Gumroad API](http://gumroad.com/api/). Originally developed for [Ultiworld](http://ultiworld.com).
 
 Dependencies:
 
@@ -28,14 +27,14 @@ Good practice to also deauth once you are done, but if you did not, the client d
 
     $gr->sessions->authenticate($params);
     
-    #Shortcut
+    # Shortcut method
     $gr->auth($email, $password);
 
 ##### Deauthenticate a session
 
     $gr->sessions->deauthenticate();
 
-    #Shortcut
+    # Shortcut method
     $gr->deauth;
 
 #### [Links](https://gumroad.com/api/methods)
@@ -71,4 +70,4 @@ Good practice to also deauth once you are done, but if you did not, the client d
 ## License
 MIT License (see LICENSE).
 
-Copyright (c) 2013 Orion Burt
+Copyright (c) 2013 Orion Burt.
