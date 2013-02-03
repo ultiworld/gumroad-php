@@ -24,53 +24,37 @@ class Gumroad_Client
 	}
 
 	//shortcut for auth
-	public function authenticate( $email, $password ) {
+	public function auth( $email, $password ) {
 		$params = array('email' => $email, 'password' => $password);
 		return $this->sessions->authenticate($params);
 	}
 
 	//shortcut for deauth
-	public function deauthenticate() {
+	public function deauth() {
 		return $this->sessions->deauthenticate();
 	}
 
 	public function __destruct() {
-		if( $this->requester->getToken() ) {
-			$this->deauthenticate();
+		if( $this->requester->token ) {
+			$this->deauth();
 		}
 	}
 }
 
 class Gumroad_Requester 
 {
-	private $_timeout;
-	private $_token;
+	public $timeout;
+	public $token;
 
 	public function __construct( $timeout=GUMROAD_API_TIMEOUT ) {
-		$this->_timeout = $timeout;
-		$this->_token = null;
-	}
-
-	public function setTimeout( $timeout ) {
-		return $this->_timeout = $timeout;
-	}
-
-	public function getTimeout( $timeout ) {
-		return $this->_timeout;
-	}
-
-	public function setToken( $token ) {
-		return $this->_token = $token;
-	}
-
-	public function getToken() {
-		return $this->_token;
+		$this->timeout = $timeout;
+		$this->token = null;
 	}
 
 	public function request( $method, $url, $params = array() ) {
 		//Start request
         $ch   = curl_init();
-        $params['token'] = $this->_token;
+        $params['token'] = $this->token;
         $query = http_build_query($params);
 
         switch ( strtoupper($method) ) {
@@ -95,7 +79,7 @@ class Gumroad_Requester
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT_MS, $this->_timeout);
+        curl_setopt($ch, CURLOPT_TIMEOUT_MS, $this->timeout);
         # End of build request
 
         $response = curl_exec($ch);
@@ -140,14 +124,14 @@ class Gumroad_Sessions_Endpoint extends Gumroad_EndpointAbstract
 
 	public function authenticate( $params ) {
 		$response = $this->requester->request('POST', $this->url, $params);
-		$this->requester->setToken($response->token);
+		$this->requester->token = $response->token;
 		return $response;
 
 	}
 
 	public function deauthenticate() {
 		$response = $this->requester->request('DELETE', $this->url);
-		$this->requester->setToken(null);
+		$this->requester->token = null;
 		return $response;
 	}
 }
