@@ -1,9 +1,6 @@
 <?php
 /**
  * Gumroad PHP Client Library
-<?php
-/**
- * Gumroad PHP Client Library
  *
  * PHP wrapper for Gumroad API. Originally developed for Ultiworld.
  * 

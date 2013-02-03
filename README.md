@@ -35,7 +35,7 @@ Good practice to also deauth once you are done, but if you did not, the client d
     $gr->sessions->deauthenticate();
 
     # Shortcut method
-    $gr->deauth;
+    $gr->deauth();
 
 #### [Links](https://gumroad.com/api/methods)
 
