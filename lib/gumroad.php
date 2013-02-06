@@ -58,7 +58,7 @@ class Gumroad_Client
 	 * 
 	 * @param string $email
 	 * @param string $password
-	 * @return stdClass $response
+	 * @return array $response
 	 */
 	public function auth( $email, $password ) {
 		$params = array('email' => $email, 'password' => $password);
@@ -68,7 +68,7 @@ class Gumroad_Client
 	/**
 	 * Shortcut function for deauthentication
 	 * 
-	 * @return stdClass $response
+	 * @return array $response
 	 */
 	public function deauth() {
 		return $this->sessions->deauthenticate();
@@ -123,7 +123,7 @@ class Gumroad_Requester
 	 * @param string $method
 	 * @param string $url
 	 * @param array $params
-	 * @return stdClass $response
+	 * @return array $response
 	 */
 	public function request( $method, $url, $params = array() ) {
 		# Build request
@@ -230,7 +230,7 @@ class Gumroad_Sessions_Endpoint extends Gumroad_EndpointAbstract
 	 * Sends request to authenticate a new session 
 	 * 
 	 * @param array $params
-	 * @return stdClass $response
+	 * @return array $response
 	 */
 	public function authenticate( $params ) {
 		$response = $this->requester->request('POST', $this->url, $params);
@@ -242,7 +242,7 @@ class Gumroad_Sessions_Endpoint extends Gumroad_EndpointAbstract
 	/**
 	 * Sends request to deautheticate the active session
 	 * 
-	 * @return stdClass $response
+	 * @return array $response
 	 */
 	public function deauthenticate() {
 		$response = $this->requester->request('DELETE', $this->url);
@@ -273,7 +273,7 @@ class Gumroad_Links_Endpoint extends Gumroad_EndpointAbstract
 	/**
 	 * Sends request to get all links
 	 * 
-	 * @return stdClass $response
+	 * @return array $response
 	 */
 	public function getLinks() {
 		return $this->requester->request('GET', $this->url);
@@ -283,7 +283,7 @@ class Gumroad_Links_Endpoint extends Gumroad_EndpointAbstract
 	 * Sends request to get a link
 	 * 
 	 * @param string $id
-	 * @return stdClass $response
+	 * @return array $response
 	 */
 	public function getLink( $id ) {
 		return $this->requester->request('GET', $this->url . '/' . $id);
@@ -293,7 +293,7 @@ class Gumroad_Links_Endpoint extends Gumroad_EndpointAbstract
 	 * Sends request to create a link
 	 * 
 	 * @param array $params
-	 * @return stdClass $response
+	 * @return array $response
 	 */
 	public function createLink( $params ) {
 		return $this->requester->request('POST', $this->url, $params);
@@ -304,7 +304,7 @@ class Gumroad_Links_Endpoint extends Gumroad_EndpointAbstract
 	 * 
 	 * @param string $id
 	 * @param array $params
-	 * @return stdClass $response
+	 * @return array $response
 	 */
 	public function editLink( $id, $params ) {
 		return $this->requester->request('PUT', $this->url . '/' . $id, $params);
@@ -314,7 +314,7 @@ class Gumroad_Links_Endpoint extends Gumroad_EndpointAbstract
 	 * Sends request to enable (aka publish) a link
 	 * 
 	 * @param string $id
-	 * @return stdClass $response
+	 * @return array $response
 	 */
 	public function enableLink( $id ) {
 		return $this->requester->request('PUT', $this->url . '/' . $id . '/enable');
@@ -324,7 +324,7 @@ class Gumroad_Links_Endpoint extends Gumroad_EndpointAbstract
 	 * Sends request to disable (aka unpublish) a link
 	 * 
 	 * @param string $id
-	 * @return stdClass $response
+	 * @return array $response
 	 */
 	public function disableLink( $id ) {
 		return $this->requester->request('PUT', $this->url . '/' . $id . '/disable');
@@ -334,7 +334,7 @@ class Gumroad_Links_Endpoint extends Gumroad_EndpointAbstract
 	 * Sends request to delete a link
 	 * 
 	 * @param string $id
-	 * @return stdClass $response
+	 * @return array $response
 	 */
 	public function deleteLink( $id ) {
 		return $this->requester->request('DELETE', $this->url . '/' . $id);

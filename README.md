@@ -19,6 +19,14 @@ Dependencies:
 
 Good practice to also deauth once you are done, but if you did not, the client destructor method will deauth for you.
 
+### HTTP Requests & Responses
+
+    $id = 'uWhq'
+    $params = array('name' => 'A Wonderful Widget', 'price' => 100);
+    $response = $gr->link->editLink($id, $params);
+
+$id should be a string and $params should be an associative array. $response will be the HTTP response body JSON-decoded into an associative array, with the HTTP status code appended (`'http_code' => 200`).
+
 ### API Endpoints
 
 #### [Sessions](https://gumroad.com/api/authentication)
