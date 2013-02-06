@@ -126,8 +126,8 @@ class Gumroad_Requester
 	 * @return stdClass $response
 	 */
 	public function request( $method, $url, $params = array() ) {
-		//Start request
-		$ch   = curl_init();
+		# Build request
+		$ch   = curl_init();	
 		$params['token'] = $this->token;
 		$query = http_build_query($params);
 
@@ -158,21 +158,16 @@ class Gumroad_Requester
 
 		$response = curl_exec($ch);
 		
-		# Check response for errors
-		$httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-		if ( $httpCode >= 300 ) {
-			throw new Gumroad_Exception($httpCode);
-		} 
-
+		# Check response for cURL errors
 		$curlError = curl_error($ch);
 		if ( $curlError ) {
 			throw new Gumroad_Exception($curlError);
 		}
 
-		$response = json_decode($response);
-		if ( !$response->success ) {
-			throw new Gumroad_Exception($response->error->message);
-		}
+		# Convert JSON response to an associative array 
+		# and append the HTTP status code
+		$response = json_decode($response, TRUE);
+		$response['http_code'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 		return $response;
 	}
@@ -239,7 +234,7 @@ class Gumroad_Sessions_Endpoint extends Gumroad_EndpointAbstract
 	 */
 	public function authenticate( $params ) {
 		$response = $this->requester->request('POST', $this->url, $params);
-		$this->requester->token = $response->token;
+		$this->requester->token = $response['token'];
 		return $response;
 
 	}
