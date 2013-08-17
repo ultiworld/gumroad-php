@@ -36,11 +36,11 @@ class Gumroad_Client
 	public $sessions;
 
 	/**
-	 * The API endpoint for /links
+	 * The API endpoint for /products
 	 * 
-	 * @var Gumroad_Links_Endpoint
+	 * @var Gumroad_Products_Endpoint
 	 */
-	public $links;
+	public $products;
 
 	/**
 	 * Initializes a Gumroad_Client object
@@ -50,7 +50,7 @@ class Gumroad_Client
 	public function __construct() {
 		$this->requester = new Gumroad_Requester();
 		$this->sessions = new Gumroad_Sessions_Endpoint($this->requester);
-		$this->links = new Gumroad_Links_Endpoint($this->requester);
+		$this->products = new Gumroad_Products_Endpoint($this->requester);
 	}
 
 	/**
@@ -252,91 +252,91 @@ class Gumroad_Sessions_Endpoint extends Gumroad_EndpointAbstract
 }
 
 /**
- * Gumroad Links Endpoint Class
+ * Gumroad Products Endpoint Class
  * 
- * Used in conjunction with a Gumroad_Requester object to access the /links endpoint
+ * Used in conjunction with a Gumroad_Requester object to access the /products endpoint
  */
-class Gumroad_Links_Endpoint extends Gumroad_EndpointAbstract
+class Gumroad_Products_Endpoint extends Gumroad_EndpointAbstract
 {
 	/**
-	 * Initializes a Gumroad_Links_Endpoint object
+	 * Initializes a Gumroad_Products_Endpoint object
 	 * 
 	 * Calls parent constructor and adds on endpoint path to base API URL
 	 * @param Gumroad_Requester $requester
-	 * @param string $path defaults to '/links'
+	 * @param string $path defaults to '/products'
 	 */
-	public function __construct( $requester, $path='/links' ) {
+	public function __construct( $requester, $path='/products' ) {
 		parent::__construct($requester);
 		$this->url = $this->url . $path;
 	}
 
 	/**
-	 * Sends request to get all links
+	 * Sends request to get all products
 	 * 
 	 * @return array $response
 	 */
-	public function getLinks() {
+	public function getProducts() {
 		return $this->requester->request('GET', $this->url);
 	}
 
 	/**
-	 * Sends request to get a link
+	 * Sends request to get a product
 	 * 
 	 * @param string $id
 	 * @return array $response
 	 */
-	public function getLink( $id ) {
+	public function getProduct( $id ) {
 		return $this->requester->request('GET', $this->url . '/' . $id);
 	}
 
 	/**
-	 * Sends request to create a link
+	 * Sends request to create a product
 	 * 
 	 * @param array $params
 	 * @return array $response
 	 */
-	public function createLink( $params ) {
+	public function createProduct( $params ) {
 		return $this->requester->request('POST', $this->url, $params);
 	}
 
 	/**
-	 * Sends request to edit a link
+	 * Sends request to edit a product
 	 * 
 	 * @param string $id
 	 * @param array $params
 	 * @return array $response
 	 */
-	public function editLink( $id, $params ) {
+	public function editProduct( $id, $params ) {
 		return $this->requester->request('PUT', $this->url . '/' . $id, $params);
 	}
 
 	/**
-	 * Sends request to enable (aka publish) a link
+	 * Sends request to enable (aka publish) a product
 	 * 
 	 * @param string $id
 	 * @return array $response
 	 */
-	public function enableLink( $id ) {
+	public function enableProduct( $id ) {
 		return $this->requester->request('PUT', $this->url . '/' . $id . '/enable');
 	}
 
 	/**
-	 * Sends request to disable (aka unpublish) a link
+	 * Sends request to disable (aka unpublish) a product
 	 * 
 	 * @param string $id
 	 * @return array $response
 	 */
-	public function disableLink( $id ) {
+	public function disableProduct( $id ) {
 		return $this->requester->request('PUT', $this->url . '/' . $id . '/disable');
 	}
 
 	/**
-	 * Sends request to delete a link
+	 * Sends request to delete a product
 	 * 
 	 * @param string $id
 	 * @return array $response
 	 */
-	public function deleteLink( $id ) {
+	public function deleteProduct( $id ) {
 		return $this->requester->request('DELETE', $this->url . '/' . $id);
 	}
 }
